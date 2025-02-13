@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.AddressableLEDSubsystem;
 import frc.robot.subsystems.AddressableLEDSubsystem.ColorType;
 
@@ -25,11 +24,8 @@ import frc.robot.subsystems.AddressableLEDSubsystem.ColorType;
  */
 public class Robot extends TimedRobot {
   private Command autonomousCommand;
-  private Command testCommand;
   private final AddressableLEDSubsystem LEDSubsystem = AddressableLEDSubsystem.getInstance();
   private RobotContainer robotContainer;
-  private int iter;
-  private int hue;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -39,8 +35,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
-    iter = 0;
-    hue = 0;
 
     // instantiate branch and commit files from deploy directory
     File branchFile = new File(Filesystem.getDeployDirectory(), "branch.txt");
