@@ -1,15 +1,10 @@
 package frc.robot.subsystems.animations;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.FileSystem;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.ToDoubleBiFunction;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -21,63 +16,65 @@ public class AnimationHandler {
     
     public static Integer[][][][] getAnimation(String pathname){
         String path = pathname;
-        ArrayList<BufferedImage> bufferedImages;
+        BufferedImage[] bufferedImages;
+
+        //default animation
         if(pathname == null) path = "coinanimation.gif";
         
         File input = new File(Filesystem.getDeployDirectory()+ "/" + path);
         try {
-            bufferedImages = convertGifToBufferedImages(input);
+            bufferedImages = getFramesFromGif(input);
         } catch (Exception e) {
-            bufferedImages = new ArrayList<BufferedImage>();
+            bufferedImages = new BufferedImage[0];
         }
         
-        animationFrames = bufferedImages.size();
+        animationFrames = bufferedImages.length;
         //twoDarrayList[frame][row][col][r, g, b index (0, 1, 2)]
-        Integer[][][][] twoDarrayList = convertTo2DUsingGetRGB(bufferedImages).toArray(new Integer[animationFrames][16][16][3]);
+        Integer[][][][] twoDarrayList = convertTo2DUsingGetRGB(bufferedImages);
         return twoDarrayList;
             
     }
 
     
+    private static BufferedImage[] getFramesFromGif(File gifFile) throws IOException {
+        List<BufferedImage> frames = new ArrayList<>();
+        ImageInputStream imageStream = ImageIO.createImageInputStream(gifFile);
+        Iterator<ImageReader> readers = ImageIO.getImageReaders(imageStream);
 
-    private static ArrayList<BufferedImage> convertGifToBufferedImages(File gifFile) throws IOException{
-        ArrayList<BufferedImage> frames = new ArrayList<>();
-        try (ImageInputStream input = ImageIO.createImageInputStream(gifFile)) {
-            Iterator<ImageReader> readers = ImageIO.getImageReaders(input);
-            if (!readers.hasNext()) {
-                throw new IllegalArgumentException("No reader found for given format");
-            }
-
+        if (readers.hasNext()) {
             ImageReader reader = readers.next();
-            reader.setInput(input);
+            reader.setInput(imageStream);
+            int numFrames = reader.getNumImages(true);
 
-            int numImages = reader.getNumImages(true);
-            for (int i = 0; i < numImages; i++) {
+            for (int i = 0; i < numFrames; i++) {
                 BufferedImage frame = reader.read(i);
                 frames.add(frame);
             }
         }
-        return frames;
+        return frames.toArray(new BufferedImage[0]);
     }
 
 
-    private static ArrayList<Integer[][][]> convertTo2DUsingGetRGB(ArrayList<BufferedImage> image) {
-        ArrayList<Integer[][][]> pixelsPerFrame = new ArrayList<Integer[][][]>();
-        /*int width = image.get(0).getWidth();
-        int height = image.get(0).getHeight();*/
+    private static Integer[][][][] convertTo2DUsingGetRGB(BufferedImage[] image) {
+        List<Integer[][][]> pixelsPerFrame = new ArrayList<>();
         int width = 16;
         int height = 16;
         Integer[][][] result = new Integer[height][width][];
-        for(int frames = 0; frames < image.size(); frames++){
+
+        for(int frames = 0; frames < image.length; frames++){
             for (int row = 0; row < height; row++) {
                 for (int col = 0; col < width; col++) {
-                    Integer[] pixel = intToRGB(image.get(frames).getRGB(col, row));
+                    Integer[] pixel = intToRGB(image[frames].getRGB(col, row));
                     result[row][col] = pixel;
+                    System.out.print("Frame: " + frames);
+                    System.out.print(" || Row/Col: " + row + "/" + col);
+                    System.out.println(" || RGB: " + pixel.toString());
                 }
             }
             pixelsPerFrame.add(result);
         }
-        return pixelsPerFrame;
+
+        return pixelsPerFrame.toArray(new Integer[0][][][]) ;
     }
 
 
