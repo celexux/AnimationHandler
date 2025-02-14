@@ -32,6 +32,7 @@ public class AddressableLEDSubsystem extends SubsystemBase {
   private int driver_SHIFT_H;
   private int human_SHIFT_H;
   private int animationFrame;
+  private int brightnessModifier;
   private Integer[][][][] animationArray;
   public AddressableLEDSubsystem() {
     LED = new AddressableLED(PWM_PORT);
@@ -118,7 +119,7 @@ public class AddressableLEDSubsystem extends SubsystemBase {
    * This method sets the Driver LED group to a specifed color
    */
   public void humanColorMethod(ColorType colorType) {
-    if (ColorType.SHIFT == colorType){
+    /*if (ColorType.SHIFT == colorType){
       if(human_iterations == 0){
         for(int i = DRIVER_START_RANGE; i < LEDBuffer.getLength(); i++){
           LEDBuffer.setHSV(i, human_SHIFT_H, SHIFT_S, SHIFT_V);
@@ -143,10 +144,9 @@ public class AddressableLEDSubsystem extends SubsystemBase {
         }
         LED.setData(LEDBuffer);
         human_iterations++;
-      } else if(ColorType.ANIMATION == colorType){
+      } else TODO*/if(ColorType.ANIMATION == colorType){
           if(driver_iterations == 0){
-            System.out.println(animationArray[1][12][8][0]*0.05 + "=" + animationArray[5][12][8][0]*0.05 + "=" + animationArray[3][12][8][0]*0.05);
-            System.out.println(animationFrame + "/" + animationArray.length);
+            System.out.print(animationArray[3][0][7][1] + "=" + animationArray[4][0][7][1] + "=" + animationArray[5][0][7][1] + "=" + animationArray[6][0][7][1]);
             for (int row = 0; row < 16; row++) {
               for (int col = 0; col < 16; col++) {
                 // Map image (row, col) to physical coordinates (x, y)
@@ -169,20 +169,26 @@ public class AddressableLEDSubsystem extends SubsystemBase {
                 int ledIndex = physicalX * 16 + indexInColumn;
                 
                 // Set the LED color to match the corresponding image pixel.
+                //edit this values for brightness. 0.05 is recommended for viewing within proximity.
+                brightnessModifier = 1;
+                
                 LEDBuffer.setRGB(
                   ledIndex+DRIVER_START_RANGE,
-                  (int) (animationArray[animationFrame][row][col][0]*0.05),
-                  (int) (animationArray[animationFrame][row][col][1]*0.05),
-                  (int) (animationArray[animationFrame][row][col][2]*0.05)
+                  (int) (animationArray[animationFrame][row][col][0]*brightnessModifier),
+                  (int) (animationArray[animationFrame][row][col][1]*brightnessModifier),
+                  (int) (animationArray[animationFrame][row][col][2]*brightnessModifier)
                 );
               }
             }
+            //TODO:
+            //PIXELS ARE DIFFERENT INSIDE OF ANIMATION HANDLER BUT WHEN CONVERTED DO NOT SHOW
             LED.setData(LEDBuffer);
             animationFrame++;
             animationFrame%=(animationArray.length);
+            System.out.println("=" + animationArray[animationFrame][0][7][1]);
           }
           driver_iterations++;
-          driver_iterations%=5;
+          driver_iterations%=10;
       }
   }
 

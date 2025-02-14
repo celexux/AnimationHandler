@@ -3,6 +3,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,24 +16,22 @@ public class AnimationHandler {
     public static int animationFrames;
     
     public static Integer[][][][] getAnimation(String pathname){
-        String path = pathname;
         BufferedImage[] bufferedImages;
-
-        //default animation
-        if(pathname == null) path = "coinanimation.gif";
         
-        File input = new File(Filesystem.getDeployDirectory()+ "/" + path);
+        File input = new File(Filesystem.getDeployDirectory()+ "/" + pathname);
         try {
             bufferedImages = getFramesFromGif(input);
         } catch (Exception e) {
             bufferedImages = new BufferedImage[0];
         }
         
-        animationFrames = bufferedImages.length;
         //twoDarrayList[frame][row][col][r, g, b index (0, 1, 2)]
         Integer[][][][] twoDarrayList = convertTo2DUsingGetRGB(bufferedImages);
+        System.out.print(Arrays.toString(twoDarrayList[3][0][7]));
+        System.out.print(Arrays.toString(twoDarrayList[4][0][7]));
+        System.out.print(Arrays.toString(twoDarrayList[5][0][7]));
+        System.out.print(Arrays.toString(twoDarrayList[6][0][7]));
         return twoDarrayList;
-            
     }
 
     
@@ -66,9 +65,11 @@ public class AnimationHandler {
                 for (int col = 0; col < width; col++) {
                     Integer[] pixel = intToRGB(image[frames].getRGB(col, row));
                     result[row][col] = pixel;
-                    System.out.print("Frame: " + frames);
-                    System.out.print(" || Row/Col: " + row + "/" + col);
-                    System.out.println(" || RGB: " + pixel.toString());
+                    if((row%5)==0 && (col%5)==0){
+                        System.out.print(frames + ":");
+                        System.out.print(" || Row/Col: " + row + "/" + col);
+                        System.out.println(" || " + Arrays.toString(pixel));
+                    }
                 }
             }
             pixelsPerFrame.add(result);
