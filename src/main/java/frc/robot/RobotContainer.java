@@ -29,7 +29,7 @@ public class RobotContainer {
     aLEDSub = AddressableLEDSubsystem.getInstance();
   
     autoChooser = new SendableChooser<>();
-
+    
     autoChooser.addOption("hue shift (rainbow)", Autos.shiftLED(aLEDSub)); 
     autoChooser.addOption("snake (white)", Autos.snakeLED(aLEDSub)); 
 

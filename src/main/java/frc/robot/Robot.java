@@ -98,7 +98,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    LEDSubsystem.humanColorMethod(ColorType.ANIMATION);
+    LEDSubsystem.driverColorMethod(ColorType.ANIMATION);
   }
 
   @Override

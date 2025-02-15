@@ -34,6 +34,7 @@ public class AddressableLEDSubsystem extends SubsystemBase {
   private int animationFrame;
   private double brightnessModifier;
   private Integer[][][][] animationArray;
+  
   public AddressableLEDSubsystem() {
     LED = new AddressableLED(PWM_PORT);
     LEDBuffer = new AddressableLEDBuffer(LENGTH);
@@ -44,8 +45,12 @@ public class AddressableLEDSubsystem extends SubsystemBase {
     driver_SHIFT_H = 0;
     human_iterations = 0;
     human_SHIFT_H = 0;
-    animationFrame=0;
-    animationArray = AnimationHandler.getAnimation("hiburnie.gif");
+    animationFrame = 0;
+
+    //edit this values for brightness. 0.05 is recommended for viewing within proximity.
+    brightnessModifier = .05;
+    //edit this value for gif name. will create a sendable chooser soon
+    animationArray = AnimationHandler.getAnimation("long.gif");
   }
 
   public static AddressableLEDSubsystem getInstance(){
@@ -112,7 +117,44 @@ public class AddressableLEDSubsystem extends SubsystemBase {
         }
         LED.setData(LEDBuffer);
         driver_iterations++;
-      } 
+      } else if(ColorType.ANIMATION == colorType){
+        if(driver_iterations == 0){
+          for (int row = 0; row < 32; row++) {
+            for (int col = 0; col < 8; col++) {
+              // Map image (row, col) to physical coordinates (x, y)
+              // Image: row 0 = top, col 0 = left.
+              // Physical: (0,0) = bottom right.
+              int physicalX = 7 - col;   // Rightmost image column (col=7) becomes x=0.
+              int physicalY = 31 - row;   // Top image row (row=0) becomes y=31.
+              
+              // Determine the LED's position within its column based on the wiring direction.
+              int ledIndex;
+              int baseIndex = physicalY * 8;
+              if (physicalY % 2 == 0) {
+                // Even physical row (y = 0, 2, 4, ...): ordering is from right to left.
+                // (Remember: rightmost LED is at x=0, leftmost at x=7.)
+                ledIndex = baseIndex + physicalX;
+            } else {
+                // Odd physical row (y = 1, 3, 5, ...): ordering is reversed.
+                ledIndex = baseIndex + (7 - physicalX);  // (7 - physicalX)
+            }
+              
+              // Set the LED color to match the corresponding image pixel.
+              LEDBuffer.setRGB(
+                ledIndex,
+                (int) (animationArray[animationFrame][row][col][0]*brightnessModifier),
+                (int) (animationArray[animationFrame][row][col][1]*brightnessModifier),
+                (int) (animationArray[animationFrame][row][col][2]*brightnessModifier)
+              );
+            }
+          }
+          LED.setData(LEDBuffer);
+          animationFrame++;
+          animationFrame%=(animationArray.length);
+        }
+        driver_iterations++;
+        driver_iterations%=5;
+    }
     }
 
   /**
@@ -145,7 +187,7 @@ public class AddressableLEDSubsystem extends SubsystemBase {
         LED.setData(LEDBuffer);
         human_iterations++;
       } else if(ColorType.ANIMATION == colorType){
-          if(driver_iterations == 0){
+          if(human_iterations == 0){
             for (int row = 0; row < 16; row++) {
               for (int col = 0; col < 16; col++) {
                 // Map image (row, col) to physical coordinates (x, y)
@@ -168,9 +210,6 @@ public class AddressableLEDSubsystem extends SubsystemBase {
                 int ledIndex = physicalX * 16 + indexInColumn;
                 
                 // Set the LED color to match the corresponding image pixel.
-                //edit this values for brightness. 0.05 is recommended for viewing within proximity.
-                brightnessModifier = .05;
-                
                 LEDBuffer.setRGB(
                   ledIndex+DRIVER_START_RANGE,
                   (int) (animationArray[animationFrame][row][col][0]*brightnessModifier),
@@ -183,8 +222,8 @@ public class AddressableLEDSubsystem extends SubsystemBase {
             animationFrame++;
             animationFrame%=(animationArray.length);
           }
-          driver_iterations++;
-          driver_iterations%=5;
+          human_iterations++;
+          human_iterations%=5;
       }
   }
 
