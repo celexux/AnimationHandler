@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AddressableLEDSubsystem;
 import frc.robot.subsystems.AddressableLEDSubsystem.ColorType;
+import frc.robot.subsystems.animations.AnimationHandler;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -88,7 +89,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     autonomousCommand = robotContainer.getAutonomousCommand();
-    
+    LEDSubsystem.setHumanArray(AnimationHandler.getAnimation(robotContainer.getHumanAnimation()));
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
@@ -98,7 +99,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    LEDSubsystem.driverColorMethod(ColorType.ANIMATION);
+    LEDSubsystem.humanColorMethod(ColorType.ANIMATION);
   }
 
   @Override

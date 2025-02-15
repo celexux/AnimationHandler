@@ -23,19 +23,24 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final AddressableLEDSubsystem aLEDSub;
   private SendableChooser<Command> autoChooser;
+  private SendableChooser<String> humanAnimationChooser;
 
   public RobotContainer() {
 
     aLEDSub = AddressableLEDSubsystem.getInstance();
   
     autoChooser = new SendableChooser<>();
+    humanAnimationChooser = new SendableChooser<>();
     
     autoChooser.addOption("hue shift (rainbow)", Autos.shiftLED(aLEDSub)); 
     autoChooser.addOption("snake (white)", Autos.snakeLED(aLEDSub)); 
-
     autoChooser.addOption("Do nothing", new InstantCommand());
 
+    humanAnimationChooser.addOption("Jumping Burnie", "burnie.gif");
+    humanAnimationChooser.addOption("Assembled Burnie", "hiburnie.gif");
+
     SmartDashboard.putData(autoChooser);
+    SmartDashboard.putData(humanAnimationChooser);
   }
 
   /**
@@ -45,5 +50,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
+  }
+  public String getHumanAnimation() {
+    return humanAnimationChooser.getSelected();
   }
 }
