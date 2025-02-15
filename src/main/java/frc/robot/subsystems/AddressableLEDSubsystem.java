@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.animations.AnimationHandler;
-
+import frc.robot.RobotContainer;
 import static frc.robot.Constants.LEDConstants.*;
 
 public class AddressableLEDSubsystem extends SubsystemBase {
@@ -47,10 +47,10 @@ public class AddressableLEDSubsystem extends SubsystemBase {
     human_iterations = 0;
     human_SHIFT_H = 0;
     animationFrame = 0;
-
+    
     //edit this values for brightness. 0.05 is recommended for viewing within proximity.
     brightnessModifier = .05;
-    //edit this value for gif name. will create a sendable chooser soon
+    //default array values
     driverAnimationArray = AnimationHandler.getAnimation("long.gif");
     humanAnimationArray = AnimationHandler.getAnimation("hiburnie.gif");
   }
@@ -61,7 +61,12 @@ public class AddressableLEDSubsystem extends SubsystemBase {
     }
     return instance;
   }
-
+  public void setHumanArray(Integer[][][][] array){
+    humanAnimationArray = array;
+  }
+  public void setDriverArray(Integer[][][][] array){
+    driverAnimationArray = array;
+  }
   /**
    * This method sets all the LED groups (Human Player & Driver) to off
    */
