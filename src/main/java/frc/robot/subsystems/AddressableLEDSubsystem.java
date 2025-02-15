@@ -33,7 +33,8 @@ public class AddressableLEDSubsystem extends SubsystemBase {
   private int human_SHIFT_H;
   private int animationFrame;
   private double brightnessModifier;
-  private Integer[][][][] animationArray;
+  private Integer[][][][] driverAnimationArray;
+  private Integer[][][][] humanAnimationArray;
   
   public AddressableLEDSubsystem() {
     LED = new AddressableLED(PWM_PORT);
@@ -50,7 +51,8 @@ public class AddressableLEDSubsystem extends SubsystemBase {
     //edit this values for brightness. 0.05 is recommended for viewing within proximity.
     brightnessModifier = .05;
     //edit this value for gif name. will create a sendable chooser soon
-    animationArray = AnimationHandler.getAnimation("long.gif");
+    driverAnimationArray = AnimationHandler.getAnimation("long.gif");
+    humanAnimationArray = AnimationHandler.getAnimation("hiburnie.gif");
   }
 
   public static AddressableLEDSubsystem getInstance(){
@@ -142,15 +144,15 @@ public class AddressableLEDSubsystem extends SubsystemBase {
               // Set the LED color to match the corresponding image pixel.
               LEDBuffer.setRGB(
                 ledIndex,
-                (int) (animationArray[animationFrame][row][col][0]*brightnessModifier),
-                (int) (animationArray[animationFrame][row][col][1]*brightnessModifier),
-                (int) (animationArray[animationFrame][row][col][2]*brightnessModifier)
+                (int) (driverAnimationArray[animationFrame][row][col][0]*brightnessModifier),
+                (int) (driverAnimationArray[animationFrame][row][col][1]*brightnessModifier),
+                (int) (driverAnimationArray[animationFrame][row][col][2]*brightnessModifier)
               );
             }
           }
           LED.setData(LEDBuffer);
           animationFrame++;
-          animationFrame%=(animationArray.length);
+          animationFrame%=(driverAnimationArray.length);
         }
         driver_iterations++;
         driver_iterations%=5;
@@ -212,15 +214,15 @@ public class AddressableLEDSubsystem extends SubsystemBase {
                 // Set the LED color to match the corresponding image pixel.
                 LEDBuffer.setRGB(
                   ledIndex+DRIVER_START_RANGE,
-                  (int) (animationArray[animationFrame][row][col][0]*brightnessModifier),
-                  (int) (animationArray[animationFrame][row][col][1]*brightnessModifier),
-                  (int) (animationArray[animationFrame][row][col][2]*brightnessModifier)
+                  (int) (humanAnimationArray[animationFrame][row][col][0]*brightnessModifier),
+                  (int) (humanAnimationArray[animationFrame][row][col][1]*brightnessModifier),
+                  (int) (humanAnimationArray[animationFrame][row][col][2]*brightnessModifier)
                 );
               }
             }
             LED.setData(LEDBuffer);
             animationFrame++;
-            animationFrame%=(animationArray.length);
+            animationFrame%=(humanAnimationArray.length);
           }
           human_iterations++;
           human_iterations%=5;
