@@ -17,7 +17,7 @@ public class AnimationHandler {
     
     public static Integer[][][][] getAnimation(String pathname){
         BufferedImage[] bufferedImages;
-        
+        Integer[][][][] twoDarrayList = new Integer[0][0][0][0];
         File input = new File(Filesystem.getDeployDirectory()+ "/" + pathname);
         try {
             bufferedImages = getFramesFromGif(input);
@@ -26,11 +26,7 @@ public class AnimationHandler {
         }
         
         //twoDarrayList[frame][row][col][r, g, b index (0, 1, 2)]
-        Integer[][][][] twoDarrayList = convertTo2DUsingGetRGB(bufferedImages);
-        System.out.print(Arrays.toString(twoDarrayList[3][0][7]));
-        System.out.print(Arrays.toString(twoDarrayList[4][0][7]));
-        System.out.print(Arrays.toString(twoDarrayList[5][0][7]));
-        System.out.print(Arrays.toString(twoDarrayList[6][0][7]));
+        twoDarrayList = convertTo2DUsingGetRGB(bufferedImages);
         return twoDarrayList;
     }
 
@@ -58,24 +54,18 @@ public class AnimationHandler {
         List<Integer[][][]> pixelsPerFrame = new ArrayList<>();
         int width = 16;
         int height = 16;
-        Integer[][][] result = new Integer[height][width][];
-
         for(int frames = 0; frames < image.length; frames++){
+            Integer[][][] result = new Integer[height][width][];
             for (int row = 0; row < height; row++) {
                 for (int col = 0; col < width; col++) {
                     Integer[] pixel = intToRGB(image[frames].getRGB(col, row));
                     result[row][col] = pixel;
-                    if((row%5)==0 && (col%5)==0){
-                        System.out.print(frames + ":");
-                        System.out.print(" || Row/Col: " + row + "/" + col);
-                        System.out.println(" || " + Arrays.toString(pixel));
-                    }
                 }
             }
             pixelsPerFrame.add(result);
         }
 
-        return pixelsPerFrame.toArray(new Integer[0][][][]) ;
+        return pixelsPerFrame.toArray(new Integer[0][0][0][0]) ;
     }
 
 
