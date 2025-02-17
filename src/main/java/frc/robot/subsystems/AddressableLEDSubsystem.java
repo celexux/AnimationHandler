@@ -50,8 +50,8 @@ public class AddressableLEDSubsystem extends SubsystemBase {
     //edit this values for brightness. 0.05 is recommended for viewing within proximity.
     brightnessModifier = .05;
     //default array values
-    driverAnimationArray = AnimationHandler.getAnimation("D_long_burnie.gif");
-    humanAnimationArray = AnimationHandler.getAnimation("H_assembling_burnie.gif");
+    driverAnimationArray = AnimationHandler.getAnimation("D_none");
+    humanAnimationArray = AnimationHandler.getAnimation("H_none");
   }
 
   public static AddressableLEDSubsystem getInstance(){
