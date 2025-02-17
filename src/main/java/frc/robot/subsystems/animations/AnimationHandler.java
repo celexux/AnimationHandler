@@ -18,7 +18,7 @@ public class AnimationHandler {
     public static Integer[][][][] getAnimation(String pathname){
         BufferedImage[] bufferedImages;
         Integer[][][][] twoDarrayList = new Integer[0][0][0][0];
-        File input = new File(Filesystem.getDeployDirectory()+ "/" + pathname);
+        File input = new File(Filesystem.getDeployDirectory()+ "/" + pathname + ".gif");
         try {
             bufferedImages = getFramesFromGif(input);
         } catch (Exception e) {
