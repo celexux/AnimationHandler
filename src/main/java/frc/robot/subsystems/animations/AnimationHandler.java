@@ -51,8 +51,15 @@ public class AnimationHandler {
 
     private static Integer[][][][] convertTo2DUsingGetRGB(BufferedImage[] image) {
         List<Integer[][][]> pixelsPerFrame = new ArrayList<>();
-        int width = image[0].getWidth();
-        int height = image[0].getHeight();
+        int width;
+        int height;
+        if(image == null){
+            width = 16;
+            height = 16;
+        } else {
+            width = image[0].getWidth();
+            height = image[0].getHeight();
+        }
         for(int frames = 0; frames < image.length; frames++){
             Integer[][][] result = new Integer[height][width][];
             for (int row = 0; row < height; row++) {
