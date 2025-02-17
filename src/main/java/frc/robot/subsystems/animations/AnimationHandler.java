@@ -54,7 +54,6 @@ public class AnimationHandler {
         List<Integer[][][]> pixelsPerFrame = new ArrayList<>();
         int width = image[0].getWidth();
         int height = image[0].getHeight();
-        System.out.println("WxH:" + width + "x" + height);
         for(int frames = 0; frames < image.length; frames++){
             Integer[][][] result = new Integer[height][width][];
             for (int row = 0; row < height; row++) {
