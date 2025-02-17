@@ -59,4 +59,7 @@ public class RobotContainer {
   public String getHumanAnimation() {
     return humanAnimationChooser.getSelected();
   }
+  public String getDriverAnimation() {
+    return driverAnimationChooser.getSelected();
+  }
 }
