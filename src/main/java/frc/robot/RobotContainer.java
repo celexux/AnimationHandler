@@ -4,10 +4,6 @@
 
 package frc.robot;
 
-
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,15 +17,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final AddressableLEDSubsystem aLEDSub;
   private SendableChooser<Command> autoChooser;
   private SendableChooser<String> humanAnimationChooser;
   private SendableChooser<String> driverAnimationChooser;
 
   public RobotContainer() {
-
-    aLEDSub = AddressableLEDSubsystem.getInstance();
-  
     autoChooser = new SendableChooser<>();
     humanAnimationChooser = new SendableChooser<>();
     driverAnimationChooser = new SendableChooser<>();
