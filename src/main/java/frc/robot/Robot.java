@@ -90,6 +90,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     autonomousCommand = robotContainer.getAutonomousCommand();
     LEDSubsystem.setHumanArray(AnimationHandler.getAnimation(robotContainer.getHumanAnimation()));
+    LEDSubsystem.setDriverArray(AnimationHandler.getAnimation(robotContainer.getDriverAnimation()));
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
@@ -100,6 +101,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     LEDSubsystem.humanColorMethod(ColorType.ANIMATION);
+    LEDSubsystem.driverColorMethod(ColorType.ANIMATION);
   }
 
   @Override
