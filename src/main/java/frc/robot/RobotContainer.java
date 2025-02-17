@@ -24,6 +24,7 @@ public class RobotContainer {
   private final AddressableLEDSubsystem aLEDSub;
   private SendableChooser<Command> autoChooser;
   private SendableChooser<String> humanAnimationChooser;
+  private SendableChooser<String> driverAnimationChooser;
 
   public RobotContainer() {
 
@@ -31,14 +32,20 @@ public class RobotContainer {
   
     autoChooser = new SendableChooser<>();
     humanAnimationChooser = new SendableChooser<>();
+    driverAnimationChooser = new SendableChooser<>();
     
     autoChooser.addOption("Do nothing", new InstantCommand());
 
-    humanAnimationChooser.addOption("Jumping Burnie", "burnie.gif");
-    humanAnimationChooser.addOption("Assembled Burnie", "hiburnie.gif");
+    humanAnimationChooser.addOption("Jumping Burnie", "H_jumping_burnie");
+    humanAnimationChooser.addOption("Assembling Burnie", "H_assembling_burnie");
+    humanAnimationChooser.addOption("Coin", "H_coin");
+    humanAnimationChooser.addOption("Earth", "H_earth");
+    
+    driverAnimationChooser.addOption("Long Burnie", "D_long_burnie");
 
     SmartDashboard.putData(autoChooser);
     SmartDashboard.putData(humanAnimationChooser);
+    SmartDashboard.putData(driverAnimationChooser);
   }
 
   /**
