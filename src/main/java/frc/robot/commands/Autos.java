@@ -12,21 +12,6 @@ import frc.robot.subsystems.AddressableLEDSubsystem.ColorType;
 
 /** Example static factory for an autonomous command. */
 public final class Autos {
-
-  public static Command shiftLED(AddressableLEDSubsystem led){
-    return Commands.sequence(
-      led.DriverColor(ColorType.SHIFT).withTimeout(10)
-    ).ignoringDisable(true);
-  }
-  public static Command snakeLED(AddressableLEDSubsystem led){
-    return Commands.sequence(
-      new ParallelCommandGroup(
-        led.DriverColor(ColorType.SNAKE).withTimeout(3),
-        led.HumanColor(ColorType.SNAKE).withTimeout(3)
-      )
-    );
-  }
-
   private Autos() {
     throw new UnsupportedOperationException("This is a utility class!");
   }

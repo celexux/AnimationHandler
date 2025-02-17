@@ -32,8 +32,6 @@ public class RobotContainer {
     autoChooser = new SendableChooser<>();
     humanAnimationChooser = new SendableChooser<>();
     
-    autoChooser.addOption("hue shift (rainbow)", Autos.shiftLED(aLEDSub)); 
-    autoChooser.addOption("snake (white)", Autos.snakeLED(aLEDSub)); 
     autoChooser.addOption("Do nothing", new InstantCommand());
 
     humanAnimationChooser.addOption("Jumping Burnie", "burnie.gif");
