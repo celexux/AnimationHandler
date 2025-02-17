@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.animations.AnimationHandler;
-import frc.robot.RobotContainer;
 import static frc.robot.Constants.LEDConstants.*;
 
 public class AddressableLEDSubsystem extends SubsystemBase {
