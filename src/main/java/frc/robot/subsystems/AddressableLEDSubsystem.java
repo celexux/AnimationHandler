@@ -30,7 +30,8 @@ public class AddressableLEDSubsystem extends SubsystemBase {
   private int human_iterations;
   private int driver_SHIFT_H;
   private int human_SHIFT_H;
-  private int animationFrame;
+  private int humanAnimationFrame;
+  private int driverAnimationFrame;
   private double brightnessModifier;
   private Integer[][][][] driverAnimationArray;
   private Integer[][][][] humanAnimationArray;
@@ -45,7 +46,8 @@ public class AddressableLEDSubsystem extends SubsystemBase {
     driver_SHIFT_H = 0;
     human_iterations = 0;
     human_SHIFT_H = 0;
-    animationFrame = 0;
+    driverAnimationFrame = 0;
+    humanAnimationFrame = 0;
     
     //edit this values for brightness. 0.05 is recommended for viewing within proximity.
     brightnessModifier = .05;
@@ -148,15 +150,15 @@ public class AddressableLEDSubsystem extends SubsystemBase {
               // Set the LED color to match the corresponding image pixel.
               LEDBuffer.setRGB(
                 ledIndex,
-                (int) (driverAnimationArray[animationFrame][row][col][0]*brightnessModifier),
-                (int) (driverAnimationArray[animationFrame][row][col][1]*brightnessModifier),
-                (int) (driverAnimationArray[animationFrame][row][col][2]*brightnessModifier)
+                (int) (driverAnimationArray[driverAnimationFrame][row][col][0]*brightnessModifier),
+                (int) (driverAnimationArray[driverAnimationFrame][row][col][1]*brightnessModifier),
+                (int) (driverAnimationArray[driverAnimationFrame][row][col][2]*brightnessModifier)
               );
             }
           }
           LED.setData(LEDBuffer);
-          animationFrame++;
-          animationFrame%=(driverAnimationArray.length);
+          driverAnimationFrame++;
+          driverAnimationFrame%=(driverAnimationArray.length);
         }
         driver_iterations++;
         driver_iterations%=5;
@@ -218,15 +220,15 @@ public class AddressableLEDSubsystem extends SubsystemBase {
                 // Set the LED color to match the corresponding image pixel.
                 LEDBuffer.setRGB(
                   ledIndex+DRIVER_START_RANGE,
-                  (int) (humanAnimationArray[animationFrame][row][col][0]*brightnessModifier),
-                  (int) (humanAnimationArray[animationFrame][row][col][1]*brightnessModifier),
-                  (int) (humanAnimationArray[animationFrame][row][col][2]*brightnessModifier)
+                  (int) (humanAnimationArray[humanAnimationFrame][row][col][0]*brightnessModifier),
+                  (int) (humanAnimationArray[humanAnimationFrame][row][col][1]*brightnessModifier),
+                  (int) (humanAnimationArray[humanAnimationFrame][row][col][2]*brightnessModifier)
                 );
               }
             }
             LED.setData(LEDBuffer);
-            animationFrame++;
-            animationFrame%=(humanAnimationArray.length);
+            humanAnimationFrame++;
+            humanAnimationFrame%=(humanAnimationArray.length);
           }
           human_iterations++;
           human_iterations%=5;
