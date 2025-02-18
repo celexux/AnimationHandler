@@ -32,8 +32,10 @@ public class RobotContainer {
     humanAnimationChooser.addOption("Assembling Burnie", "H_assembling_burnie");
     humanAnimationChooser.addOption("Coin", "H_coin");
     humanAnimationChooser.addOption("Earth", "H_earth");
+    humanAnimationChooser.addOption("None", "H_none");
     
     driverAnimationChooser.addOption("Long Burnie", "D_long_burnie");
+    driverAnimationChooser.addOption("None", "D_none");
 
     SmartDashboard.putData(autoChooser);
     SmartDashboard.putData(humanAnimationChooser);
