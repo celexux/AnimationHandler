@@ -64,9 +64,11 @@ public class AddressableLEDSubsystem extends SubsystemBase {
   }
   public void setHumanArray(Integer[][][][] array){
     humanAnimationArray = array;
+    humanAnimationFrame = 0;
   }
   public void setDriverArray(Integer[][][][] array){
     driverAnimationArray = array;
+    driverAnimationFrame = 0;
   }
   /**
    * This method sets all the LED groups (Human Player & Driver) to off
